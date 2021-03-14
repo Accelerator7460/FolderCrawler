@@ -12,11 +12,11 @@ namespace FolderCrawler
     {
 
         /// <summary>
-        /// Estrae i video contenuti nella cartella ftp, questa è inserita staticamente nel config
+        /// Avvia la procedura di crawling
         /// </summary>
-        /// <param name="ext">Filtra sull'estensione del file</param>
-        /// <returns></returns>
-        public static void getFileVideoFromFolder(JArray arrayPaths, string ext = "")
+        /// <param name="arrayPaths"></param>
+        /// <param name="ext"></param>
+        public static void initFileCrawler(JArray arrayPaths, string ext = "")
         {
             Log.WriteInfo("Inizio operazioni sui paths impostati");
             foreach (string s in arrayPaths) {
@@ -35,8 +35,6 @@ namespace FolderCrawler
             }
             Log.WriteInfo("-------------------------------------------------------------------");
             Log.WriteInfo("Fine operazioni sui paths impostati");
-            //string fullPathFolder = ConfigurationManager.AppSettings["pathVideoFTP"].ToString();
-
         }
 
         /// <summary>
@@ -48,13 +46,6 @@ namespace FolderCrawler
         /// <returns></returns>
         private static void getFileFromFolder(string path, string ext)
         {
-            //JObject response = new JObject();
-
-            //response["nomeFolder"] = Path.GetFileName(path) == "" ? Path.GetDirectoryName(path) : Path.GetFileName(path);
-            //response["pathDirectory"] = path;
-
-            // Ciclo tutti i file nella cartella
-            //JArray fileInFolder = new JArray();
             foreach (string s in Directory.GetFiles(path))
             {
                 if (ext != "")
@@ -70,11 +61,6 @@ namespace FolderCrawler
                             Log.WriteError("Errore durante l'eliminazione del file: " + s);
                             Log.WriteError("Errore rilevato: " + ex);
                         }
-                        //JObject tmp = new JObject();
-                        //tmp["nomeFile"] = Path.GetFileNameWithoutExtension(s);
-                        //tmp["extFile"] = Path.GetExtension(s);
-                        //tmp["pathFile"] = s;
-                        //fileInFolder.Add(tmp);
                     }
                 }
                 else
@@ -87,20 +73,11 @@ namespace FolderCrawler
                         Log.WriteError("Errore durante l'eliminazione del file con path: " + s);
                         Log.WriteError("Errore rilevato: " + ex);
                     }
-                    //JObject tmp = new JObject();
-                    //tmp["nomeFile"] = Path.GetFileNameWithoutExtension(s);
-                    //tmp["extFile"] = Path.GetExtension(s);
-                    //tmp["pathFile"] = s;
-                    //fileInFolder.Add(tmp);
                 }
             }
-            //response["fileInFolder"] = fileInFolder;
 
             // Ciclo tutte le cartelle nella cartella passata
-            //response["folders"] = getDirectoryFromFolder(path, ext);
             getDirectoryFromFolder(path, ext);
-
-            //return response;
         }
 
 
@@ -112,17 +89,11 @@ namespace FolderCrawler
         /// <returns></returns>
         private static void getDirectoryFromFolder(string path, string ext)
         {
-            //JArray respoonse = new JArray();
-
             // Ciclo tutte le cartelle e sottocartelle
             foreach (string s in Directory.GetDirectories(path))
             {
                 getFileFromFolder(s, ext);
-                //JObject tmp = getFileFromFolder(s, ext);
-                //respoonse.Add(tmp);
             }
-
-            //return respoonse;
         }
 
 

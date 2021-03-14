@@ -23,7 +23,7 @@ namespace FolderCrawler
 				Log.WriteInfo("Inizializzazione e lettura del file arrayPath.json completata");
 
 				if (arrayPath.Count > 0) {
-					FileUtility.getFileVideoFromFolder(arrayPath);
+					FileUtility.initFileCrawler(arrayPath);
 				} else { 
 					Log.WriteError("Errore all'avvio della procedura di cancellazione file: nessun path presente");
 				}
